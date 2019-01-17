@@ -1,8 +1,8 @@
 # Add goals and approach.
 
 def FCC(L_x,L_y,L_z):
-    if L_x*L_y*L_z <=1:
-        print("All inputs must be nonegtive and must be greater then 1.")
+    if L_x*L_y*L_z <1:
+        print("All inputs must be nonegtive and nonzero.")
         return()
     if L_x%1 !=0 or L_x%1 !=0 or L_x%1 !=0 <=1:
         print("All inputs must be integers.")
@@ -37,6 +37,9 @@ def FCC(L_x,L_y,L_z):
     ipv.xyzlim(0,10) #define as a function highest of L_xyz
     #the color and size the Na and Cl atoms
     ipv.scatter(np.array(Clx), np.array(Cly), np.array(Clz), marker = 'sphere', size = 6.5, color = "green")
+    if len(Nax) == 0:
+        ipv.show()
+        return()
     ipv.scatter(np.array(Nax), np.array(Nay), np.array(Naz), marker = 'sphere', size = 4, color = "red",)
     ipv.show()
 
