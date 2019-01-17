@@ -3,7 +3,11 @@ import ipyvolume as ipv
 import numpy as np
 def FCC(L_x,L_y,L_z):
     if L_x*L_y*L_z <=1:
-        retrun()
+        print("All inputs must be nonegtive and must be greater then 1.")
+        return()
+    if L_x%1 !=0 or L_x%1 !=0 or L_x%1 !=0 <=1:
+        print("All inputs must be integers.")
+        return()
     #define a list of positions to append to
     Clx=[]
     Cly=[]
