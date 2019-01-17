@@ -1,3 +1,5 @@
+# Add goals and approach.
+
 def FCC(L_x,L_y,L_z):
     x=[]
     y=[]
@@ -86,3 +88,6 @@ def FCC(L_x,L_y,L_z):
     ipv.scatter(X, Y, Z, marker = 'sphere', size = 6.4, color = "green")
     ipv.scatter(NX, NY, NZ, marker = 'sphere', size = 4, color = "red",)
     ipv.show()
+
+    
+    # Add conclustions and limitations.
