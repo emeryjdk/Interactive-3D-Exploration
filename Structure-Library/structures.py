@@ -2,6 +2,8 @@
 import ipyvolume as ipv
 import numpy as np
 def FCC(L_x,L_y,L_z):
+    if L_x*L_y*L_z <=1:
+        retrun()
     #define a list of positions to append to
     Clx=[]
     Cly=[]
