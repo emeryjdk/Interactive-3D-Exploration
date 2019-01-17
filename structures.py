@@ -1,93 +1,37 @@
 # Add goals and approach.
 
 def FCC(L_x,L_y,L_z):
-    x=[]
-    y=[]
-    z=[]
-    for O in range(L_x):
-        for S in range(L_y*L_z):
-            x.append(float(O))
-    for O in range(L_x):
-        for S in range(L_y):
-            for A in range(L_z):
-                y.append(float(S))
-    for O in range(L_y):
-        for S in range(L_x):
-            for A in range(L_z):
-                z.append(float(A))
-
-    for O in range(L_x-1):
-        for S in range((L_y-1)*(L_z)):
-            x.append(float(O+.5))  
-    for O in range(L_x-1):
-        for S in range(L_y-1):
-            for A in range(L_z):
-                y.append(float(S+.5))
-    for O in range(L_y-1):
-        for S in range(L_x-1):
-            for A in range(L_z):
-                z.append(float(A))
-
-    for O in range(L_x-1):
-        for S in range((L_y)*(L_z-1)):
-            x.append(float(O+.5))
-    for O in range(L_x-1):
-        for S in range(L_y):
-            for A in range(L_z-1):
-                y.append(float(S))
-    for O in range(L_y):
-        for S in range(L_x-1):
-            for A in range(L_z-1):
-                z.append(float(A+.5))
-
-    for O in range(L_x):
-        for S in range((L_y-1)*(L_z-1)):
-            x.append(float(O))
-    for O in range(L_x):
-        for S in range(L_y-1):
-            for A in range(L_z-1):
-                y.append(float(S+.5))
-    for O in range(L_y-1):
-        for S in range(L_x):
-            for A in range(L_z-1):
-                z.append(float(A+.5))
-    X = np.array(x)
-    Y = np.array(y)
-    Z = np.array(z)
-
-     #remods atoms ond the back face so that when it is shifted no atoms are out of the crystil
-    NX = np.concatenate((X[0:(L_y*L_z*(L_x-1))],X[L_y*L_z*L_x:-((L_y-1)*(L_z-1))]), axis = None)+.5
-    NY = np.concatenate((Y[0:(L_y*L_z*(L_x-1))],Y[L_y*L_z*L_x:-((L_y-1)*(L_z-1))]), axis = None)
-    NZ = np.concatenate((Z[0:(L_y*L_z*(L_x-1))],Z[L_y*L_z*L_x:-((L_y-1)*(L_z-1))]), axis = None)
-    Nx = []
-    Ny = []
-    Nz = []
-
-    #Na+ atoms on the x=0 face
-    for O in range((L_y)*(L_z-1)):
-        Nx.append(0.0)
-    for O in range(L_y):
-        for S in range(L_z-1):
-            Ny.append(float(O))
-    for O in range(L_y):
-        for A in range(L_z-1):
-            Nz.append(float(A+.5))
-
-    for O in range((L_y-1)*(L_z)):
-        Nx.append(0.0)
-    for O in range(L_z):
-        for S in range(L_y-1):
-            Ny.append(float(S+.5))
-    for O in range(L_z):
-        for A in range(L_y-1):
-            Nz.append(float(O))#do real math
-    NX = np.concatenate((np.array(Nx),NX), axis = None)
-    NY = np.concatenate((np.array(Ny),NY), axis = None)
-    NZ = np.concatenate((np.array(Nz),NZ), axis = None)
-    ipv.xyzlim(0,10)
-    ipv.scatter(X, Y, Z, marker = 'sphere', size = 6.4, color = "green")
-    ipv.scatter(NX, NY, NZ, marker = 'sphere', size = 4, color = "red",)
+    #define a list of positions to append to
+    Clx=[]
+    Cly=[]
+    Clz=[]
+    Nax=[]
+    Nay=[]
+    Naz=[]
+    #for each layer of the atom in the x direction. the *2-1 is so that L_x is the number of unit cells
+    for O in range(L_x*2-1):
+        #for each layer in the y direction.
+        for S in range(L_y*2-1):
+            #for each layer in the z directoin.
+            for A in range(L_z*2-1):
+                #if in this position there shoud be a Cl atom
+                if (O+S+A)%2 == 0:
+                    #the .5 is becasue L_xyz was multiplyed by 2
+                    Clx.append(float(O*.5))
+                    Cly.append(float(S*.5))
+                    Clz.append(float(A*.5))
+                #if there should be a Na atom
+                elif(O+S+A)%2 == 1:
+                    Nax.append(float(O*.5))
+                    Nay.append(float(S*.5))
+                    Naz.append(float(A*.5))
+                #if there should not be an atom
+                #in theory this could be used to remod otheratoms to make cubic or BCC structure
+                else:
+    #the x, y, z limits
+    ipv.xyzlim(0,10) #define as a function highest of L_xyz
+    #the color and size the Na and Cl atoms
+    ipv.scatter(np.array(Clx), np.array(Cly), np.array(Clz), marker = 'sphere', size = 6.5, color = "green")
+    ipv.scatter(np.array(Nax), np.array(Nay), np.array(Naz), marker = 'sphere', size = 4, color = "red",)
     ipv.show()
 
-    
-    # Add conclustions and limitations.
