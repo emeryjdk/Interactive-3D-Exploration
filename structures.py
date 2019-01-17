@@ -12,11 +12,11 @@ def FCC(L_x,L_y,L_z):
     for O in range(L_x*2-1):
         #for each layer in the y direction.
         for S in range(L_y*2-1):
-            #for each layer in the z directoin.
+            #for each layer in the z direction.
             for A in range(L_z*2-1):
                 #if in this position there shoud be a Cl atom
                 if (O+S+A)%2 == 0:
-                    #the .5 is becasue L_xyz was multiplyed by 2
+                    #the 0.5 is becasue L_xyz was multiplied by 2
                     Clx.append(float(O*.5))
                     Cly.append(float(S*.5))
                     Clz.append(float(A*.5))
@@ -26,7 +26,7 @@ def FCC(L_x,L_y,L_z):
                     Nay.append(float(S*.5))
                     Naz.append(float(A*.5))
                 #if there should not be an atom
-                #in theory this could be used to remod otheratoms to make cubic or BCC structure
+                #in theory this could be used to remod other atoms to make cubic or BCC structure
                 else:
     #the x, y, z limits
     ipv.xyzlim(0,10) #define as a function highest of L_xyz
