@@ -1,5 +1,6 @@
 # Add goals and approach.
-
+import ipyvolume as ipv
+import numpy as np
 def FCC(L_x,L_y,L_z):
     #define a list of positions to append to
     Clx=[]
@@ -26,8 +27,7 @@ def FCC(L_x,L_y,L_z):
                     Nay.append(float(S*.5))
                     Naz.append(float(A*.5))
                 #if there should not be an atom
-                #in theory this could be used to remod other atoms to make cubic or BCC structure
-                else:
+                #in theory this could be used to remove other atoms to make cubic or BCC structure
     #the x, y, z limits
     ipv.xyzlim(0,10) #define as a function highest of L_xyz
     #the color and size the Na and Cl atoms
