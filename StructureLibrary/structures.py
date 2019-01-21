@@ -1,5 +1,6 @@
 # Add goals and approach.
-
+import ipyvolume as ipv
+import numpy as np
 def FCC(L_x,L_y,L_z):
     #define a list of positions to append to
     Clx=[]
