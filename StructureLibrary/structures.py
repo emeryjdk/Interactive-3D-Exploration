@@ -1,7 +1,16 @@
 # Add goals and approach.
 import ipyvolume as ipv
 import numpy as np
-def NACL(L_x,L_y,L_z,ColorNa = 'red',ColorCl = 'green'):
+def NACL(L_x,L_y=None,L_z=None,ColorNa='red',ColorCl='green'):
+    if L_y == None:
+        L_y = L_x
+    if L_z == None:
+        L_z = L_x
+    if L_x > L_y:
+        Max = L_x
+    else: Max = L_y
+    if L_z > Max:
+        Max = L_z#defined as a function highest of L_xyz
     #define a list of positions to append to
     Clx=[]
     Cly=[]
@@ -29,7 +38,7 @@ def NACL(L_x,L_y,L_z,ColorNa = 'red',ColorCl = 'green'):
                 #if there should not be an atom
                 #in theory this could be used to remove other atoms to make cubic or BCC structure
     #the x, y, z limits
-    ipv.xyzlim(0,10) #define as a function highest of L_xyz
+    ipv.xyzlim(0,Max)
     #the color and size the Na and Cl atoms
     ipv.scatter(np.array(Clx), np.array(Cly), np.array(Clz), marker = 'sphere', size = 6.5, color = ColorCl)
     ipv.scatter(np.array(Nax), np.array(Nay), np.array(Naz), marker = 'sphere', size = 4, color = ColorNa,)
