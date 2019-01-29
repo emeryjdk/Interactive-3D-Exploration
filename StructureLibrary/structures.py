@@ -43,11 +43,11 @@ def NACL(L_x,L_y=None,L_z=None,ColorNa='red',ColorCl='green'):
     #the x, y, z limits
     ipv.xyzlim(0,Max)
     #the color and size the Na and Cl atoms
-    ipv.scatter(np.array(Clx), np.array(Cly), np.array(Clz), marker = 'sphere', size = 6.5, color = "green")
+    ipv.scatter(np.array(Clx), np.array(Cly), np.array(Clz), marker = 'sphere', size = 6.5, color = ColorCl)
     if len(Nax) == 0:
         ipv.show()
         return()
-    ipv.scatter(np.array(Nax), np.array(Nay), np.array(Naz), marker = 'sphere', size = 4, color = "red",)
+    ipv.scatter(np.array(Nax), np.array(Nay), np.array(Naz), marker = 'sphere', size = 4, color = ColorNa,)
     ipv.show()
 def BCC(L_x,L_y,L_z,Color = 'red'):
     if L_x > L_y:
