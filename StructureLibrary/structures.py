@@ -6,6 +6,9 @@ def NACL(L_x,L_y=None,L_z=None,ColorNa='red',ColorCl='green'):
         L_y = L_x
     if L_z == None:
         L_z = L_x
+    if L_x%1 !=0 or L_x%1 !=0 or L_x%1 !=0:
+        print("All inputs must be integers.")
+        return()
     if L_x > L_y:
         Max = L_x
     else: Max = L_y
@@ -41,9 +44,17 @@ def NACL(L_x,L_y=None,L_z=None,ColorNa='red',ColorCl='green'):
     ipv.xyzlim(0,Max)
     #the color and size the Na and Cl atoms
     ipv.scatter(np.array(Clx), np.array(Cly), np.array(Clz), marker = 'sphere', size = 6.5, color = ColorCl)
+    if len(Nax) == 0:
+        ipv.show()
+        return()
     ipv.scatter(np.array(Nax), np.array(Nay), np.array(Naz), marker = 'sphere', size = 4, color = ColorNa,)
     ipv.show()
 def BCC(L_x,L_y,L_z,Color = 'red'):
+    if L_x > L_y:
+        Max = L_x
+    else: Max = L_y
+    if L_z > Max:
+        Max = L_z#defined as a function highest of L_xyz
     #for each layer of the atom in the x direction. the *2-1 is so that L_x is the number of unit cells
     Ax = []
     Ay = []
@@ -65,10 +76,15 @@ def BCC(L_x,L_y,L_z,Color = 'red'):
                 #if there should not be an atom
                 #in theory this could be used to remove other atoms to make cubic or BCC structure
     #the x, y, z limits
-    ipv.xyzlim(0,10) #define as a function highest of L_xyz
+    ipv.xyzlim(0,Max) #define as a function highest of L_xyz
     ipv.scatter(np.array(Ax), np.array(Ay), np.array(Az), marker = 'sphere', size = 6.5, color = Color)
     ipv.show()
 def FCC(L_x,L_y,L_z,Color = 'red'):
+    if L_x > L_y:
+        Max = L_x
+    else: Max = L_y
+    if L_z > Max:
+        Max = L_z#defined as a function highest of L_xyz
     Ax = []
     Ay = []
     Az = []
@@ -90,10 +106,15 @@ def FCC(L_x,L_y,L_z,Color = 'red'):
                 #if there should not be an atom
                 #in theory this could be used to remove other atoms to make cubic or BCC structure
     #the x, y, z limits
-    ipv.xyzlim(0,10) #define as a function highest of L_xyz
+    ipv.xyzlim(0,Max) #defined as a function highest of L_xyz
     ipv.scatter(np.array(Ax), np.array(Ay), np.array(Az), marker = 'sphere', size = 6.5, color = Color)
     ipv.show()
 def SC(L_x,L_y,L_z,Color = 'red'):
+    if L_x > L_y:
+        Max = L_x
+    else: Max = L_y
+    if L_z > Max:
+        Max = L_z#defined as a function highest of L_xyz
     Ax = []
     Ay = []
     Az = []
@@ -106,6 +127,6 @@ def SC(L_x,L_y,L_z,Color = 'red'):
                 Ay.append(float(S))
                 Az.append(float(A))
     #the x, y, z limits
-    ipv.xyzlim(0,10) #define as a function highest of L_xyz
+    ipv.xyzlim(0,Max) #defined as a function highest of L_xyz
     ipv.scatter(np.array(Ax), np.array(Ay), np.array(Az), marker = 'sphere', size = 6.5, color = Color)
     ipv.show()
