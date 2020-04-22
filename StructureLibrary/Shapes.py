@@ -1,6 +1,6 @@
 import ipyvolume as ipv
 import numpy as np
-def SphereHiRes(xp,yp,zp,r,res,Color_):
+def SphereHiRes(xp,yp,zp,r,res,Color_): #Create a high-res sphere, (xp, yp, zp) define sphere center, r defines radius, res defines resolution and Color_ defines color.
     thetavec = np.arange(0,np.pi+np.pi/res,np.pi/res) #Create theta vector, spacing is pi/res.
     phivec = np.arange(0,2*np.pi,np.pi/res) #Create phi vector, spacing is pi/res.
     th, ph = np.meshgrid(thetavec, phivec)
@@ -9,31 +9,31 @@ def SphereHiRes(xp,yp,zp,r,res,Color_):
     Y = r*np.sin(th)*np.sin(ph) + yp
     Z = r*np.cos(th) + zp
     ipv.pylab.plot_mesh(X, Z, Y, color=Color_, wireframe=False, surface=True,wrapx=True, wrapy=False)
-def Arrow(x1,y1,z1, x2,y2,z2, R1,R2, Hi,res,Color):
-    v = [x1-x2,y1-y2,z1-z2] # Vector paralles to arrow with same magniitude
-    v_ = [0,0,((x1-x2)**2+(y1-y2)**2+(z1-z2)**2)**(1/2)] # vector in the z direction with same maginitude
-    cos= -v[2]/(v_[2]) # to find cos take v DOT v_ and devide by their Maginitude squaired
-    sin= (1-cos**2)**(1/2) # sin^2 + cos^2 = 1
+def Arrow(x1,y1,z1, x2,y2,z2,R1,R2,H,res,Color):#Create an arrow, defined by two points. R1 is cylinder radius, R2 is cone base radius, res defines resolution, Color defines color. 
+    v = [x1-x2,y1-y2,z1-z2] # Vector defining arrow direction and magnitude.
+    v_ = [0,0,((x1-x2)**2+(y1-y2)**2+(z1-z2)**2)**(1/2)] # Vector in the z-direction with same maginitude
+    cos = -v[2]/(v_[2]) # to find cos take v DOT v_ and divide by their magnitudes squared
+    sin = (1-cos**2)**(1/2) # sin^2 + cos^2 = 1
     v_crosv = [v[1]*v_[2],-v[0]*v_[2],0] # Cross product of v and v_
-    Dv_crosV = (v_crosv[0]**2+v_crosv[1]**2)**(1/2) # the Maginitue of the crosproduct
-    l = v_crosv[0]/Dv_crosV # used in the Matrix
-    m = v_crosv[1]/Dv_crosV # ||
+    Dv_crosV = (v_crosv[0]**2+v_crosv[1]**2)**(1/2) # the magnitude of the cross product
+    l = v_crosv[0]/Dv_crosV # Defining matrix transformation elements
+    m = v_crosv[1]/Dv_crosV # Defining matrix transformation elements, n = 0
     M = [[l*l*(1-cos)+cos, m*l*(1-cos),     m*sin]   ,
          [l*m*(1-cos),     m*m*(1-cos)+cos, (-l)*sin],
          [0-m*sin,         l*sin,           cos],    ] # Matrix for vector transformation
-    C1H = Hi * v_[2] #cilindar one hight
-    Hight = np.arange(0,2*C1H,C1H) # List of [0,C1H]
-    thetavec = np.arange(0,2*np.pi+np.pi/res,np.pi/res) # res incromets of angles
-    C1hi, C1th = np.meshgrid(Hight, thetavec) # mesh to make the plot
+    C1H = H * v_[2] #Cylinder one height
+    Height = np.arange(0,2*C1H,C1H) # List of [0,C1H]
+    thetavec = np.arange(0,2*np.pi+np.pi/res,np.pi/res) # Angle resolution increments
+    C1hi, C1th = np.meshgrid(Height, thetavec) # Create the mesh datapoints.
     X1_ = np.cos(C1th)*R1
     Y1_ = np.sin(C1th)*R1
-    Z1_ = C1hi # to create the x,y,z positns of the cilindar
+    Z1_ = C1hi # to create the x,y,z positions of the cylinder.
     Radius = np.arange(0,2*R1,R1)
     P1ra, P1th = np.meshgrid(Radius, thetavec)
     X2_ = np.cos(P1th)*P1ra
     Y2_ = np.sin(P1th)*P1ra
-    Z2_ = P1ra*0 # to create the x,y,z positns of the bottom cercle
-    if R2 <= R1: # of the radisu of the cone is less then the radius of he cilindar
+    Z2_ = P1ra*0 # to create the x,y,z positions of the bottom circle
+    if R2 <= R1: # of the radius of the cone is less then the radius of he cylinder
         X3_ = X2_
         Y3_ = Y2_
         Z3_ = Z2_+C1H
@@ -42,10 +42,10 @@ def Arrow(x1,y1,z1, x2,y2,z2, R1,R2, Hi,res,Color):
         P2ra, P2th = np.meshgrid(Radius, thetavec)
         X3_ = np.cos(P2th)*P2ra
         Y3_ = np.sin(P2th)*P2ra
-        Z3_ = P2ra*0+C1H # to create the x,y,z positns of the top cercle
-    C2H = (1 - Hi) * v_[2] # the hight of the cone
-    Hight = np.arange(0,2*C2H,C2H)
-    C2hi, C2th = np.meshgrid(Hight, thetavec)
+        Z3_ = P2ra*0+C1H # to create the x,y,z positions of the top circle
+    C2H = (1 - H) * v_[2] # the height of the cone
+    Height = np.arange(0,2*C2H,C2H)
+    C2hi, C2th = np.meshgrid(Height, thetavec)
     X4_ = np.cos(C2th)*R2*-(C2hi/C2H-1)
     Y4_ = np.sin(C2th)*R2*-(C2hi/C2H-1)
     Z4_ = C2hi+C1H # to create the x,y,z positns of the cone
